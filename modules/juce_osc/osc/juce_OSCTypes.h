@@ -47,7 +47,9 @@ class JUCE_API  OSCTypes
 {
 public:
     static const OSCType int32;
+	static const OSCType int64;
     static const OSCType float32;
+	static const OSCType float64;
     static const OSCType string;
     static const OSCType blob;
     static const OSCType colour;
@@ -55,7 +57,9 @@ public:
     static bool isSupportedType (OSCType type) noexcept
     {
         return type == OSCTypes::int32
+			|| type == OSCTypes::int64
             || type == OSCTypes::float32
+			|| type == OSCTypes::float64
             || type == OSCTypes::string
             || type == OSCTypes::blob
             || type == OSCTypes::colour;

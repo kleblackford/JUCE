@@ -43,8 +43,14 @@ public:
     /** Constructs an OSCArgument with type int32 and a given value. */
     OSCArgument (int32 value);
 
+	/** Constructs an OSCArgument with type int64 and a given value. */
+	OSCArgument(int64 value);
+
     /** Constructs an OSCArgument with type float32 and a given value. */
     OSCArgument (float value);
+
+	/** Constructs an OSCArgument with type float32 and a given value. */
+	OSCArgument(double value);
 
     /** Constructs an OSCArgument with type string and a given value */
     OSCArgument (const String& value);
@@ -68,8 +74,14 @@ public:
     /** Returns whether the type of the OSCArgument is int32. */
     bool isInt32() const noexcept           { return type == OSCTypes::int32; }
 
+	/** Returns whether the type of the OSCArgument is int32. */
+	bool isInt64() const noexcept			{ return type == OSCTypes::int64; }
+
     /** Returns whether the type of the OSCArgument is float. */
     bool isFloat32() const noexcept         { return type == OSCTypes::float32; }
+
+	/** Returns whether the type of the OSCArgument is double. */
+	bool isFloat64() const noexcept			{ return type == OSCTypes::float64; }
 
     /** Returns whether the type of the OSCArgument is string. */
     bool isString() const noexcept          { return type == OSCTypes::string; }
@@ -85,10 +97,20 @@ public:
     */
     int32 getInt32() const noexcept;
 
+	/** Returns the value of the OSCArgument as an int32.
+		If the type of the OSCArgument is not int32, the behaviour is undefined.
+	*/
+	int64 getInt64() const noexcept;
+
     /** Returns the value of the OSCArgument as a float32.
         If the type of the OSCArgument is not float32, the behaviour is undefined.
     */
     float getFloat32() const noexcept;
+
+	/** Returns the value of the OSCArgument as a float64.
+		If the type of the OSCArgument is not float64, the behaviour is undefined.
+	*/
+	double getFloat64() const noexcept;
 
     /** Returns the value of the OSCArgument as a string.
         If the type of the OSCArgument is not string, the behaviour is undefined.
@@ -116,6 +138,12 @@ private:
         int32 intValue;
         float floatValue;
     };
+
+	union
+	{
+		int64 longValue;
+		double doubleValue;
+	};
 
     String stringValue;
     MemoryBlock blob;

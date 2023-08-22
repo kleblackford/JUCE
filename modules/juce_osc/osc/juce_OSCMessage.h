@@ -124,10 +124,20 @@ public:
     */
     void addInt32 (int32 value);
 
+	/** Creates a new OSCArgument of type int64 with the given value,
+		and adds it to the OSCMessage object.
+	*/
+	void addInt64(int64 value);
+
     /** Creates a new OSCArgument of type float32 with the given value,
         and adds it to the OSCMessage object.
     */
     void addFloat32 (float value);
+
+	/** Creates a new OSCArgument of type float64 with the given value,
+	and adds it to the OSCMessage object.
+*/
+	void addFloat64(double value);
 
     /** Creates a new OSCArgument of type string with the given value,
         and adds it to the OSCMessage object.

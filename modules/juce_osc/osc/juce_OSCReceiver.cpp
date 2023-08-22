@@ -77,6 +77,12 @@ namespace
             return input.readIntBigEndian();
         }
 
+		int64 readInt64()
+		{
+			checkBytesAvailable(8, "OSC input stream exhausted while reading int32");
+			return input.readInt64BigEndian();
+		}
+
         uint64 readUint64()
         {
             checkBytesAvailable (8, "OSC input stream exhausted while reading uint64");
@@ -88,6 +94,12 @@ namespace
             checkBytesAvailable (4, "OSC input stream exhausted while reading float");
             return input.readFloatBigEndian();
         }
+
+		double readFloat64()
+		{
+			checkBytesAvailable(8, "OSC input stream exhausted while reading double");
+			return input.readDoubleBigEndian();
+		}
 
         String readString()
         {
@@ -180,7 +192,9 @@ namespace
             switch (type)
             {
                 case OSCTypes::int32:       return OSCArgument (readInt32());
+				case OSCTypes::int64:       return OSCArgument (readInt64());
                 case OSCTypes::float32:     return OSCArgument (readFloat32());
+				case OSCTypes::float64:     return OSCArgument (readFloat64());
                 case OSCTypes::string:      return OSCArgument (readString());
                 case OSCTypes::blob:        return OSCArgument (readBlob());
                 case OSCTypes::colour:      return OSCArgument (readColour());

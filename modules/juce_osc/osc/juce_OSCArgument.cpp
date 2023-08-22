@@ -27,7 +27,9 @@ namespace juce
 {
 
 OSCArgument::OSCArgument (int32 v)              : type (OSCTypes::int32),   intValue (v) {}
+OSCArgument::OSCArgument (int64 v)				: type (OSCTypes::int64),	longValue(v) {}
 OSCArgument::OSCArgument (float v)              : type (OSCTypes::float32), floatValue (v) {}
+OSCArgument::OSCArgument (double v)				: type (OSCTypes::float64), doubleValue(v) {}
 OSCArgument::OSCArgument (const String& s)      : type (OSCTypes::string),  stringValue (s) {}
 OSCArgument::OSCArgument (MemoryBlock b)        : type (OSCTypes::blob),    blob (std::move (b)) {}
 OSCArgument::OSCArgument (OSCColour c)          : type (OSCTypes::colour),  intValue ((int32) c.toInt32()) {}
@@ -45,10 +47,19 @@ String OSCArgument::getString() const noexcept
 int32 OSCArgument::getInt32() const noexcept
 {
     if (isInt32())
-        return intValue;
+        return longValue;
 
     jassertfalse; // you must check the type of an argument before attempting to get its value!
     return 0;
+}
+
+int64 OSCArgument::getInt64() const noexcept
+{
+	if (isInt64())
+		return intValue;
+
+	jassertfalse; // you must check the type of an argument before attempting to get its value!
+	return 0;
 }
 
 float OSCArgument::getFloat32() const noexcept
@@ -58,6 +69,15 @@ float OSCArgument::getFloat32() const noexcept
 
     jassertfalse; // you must check the type of an argument before attempting to get its value!
     return 0.0f;
+}
+
+double OSCArgument::getFloat64() const noexcept
+{
+	if (isFloat64())
+		return doubleValue;
+
+	jassertfalse; // you must check the type of an argument before attempting to get its value!
+	return 0.0f;
 }
 
 const MemoryBlock& OSCArgument::getBlob() const noexcept
@@ -138,7 +158,7 @@ public:
             expect (! arg.isBlob());
             expect (! arg.isColour());
 
-            expectEquals (arg.getFloat32(), value);
+            expect (arg.getFloat32() == value);
         }
 
         beginTest ("String");
